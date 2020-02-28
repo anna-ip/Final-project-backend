@@ -12,7 +12,7 @@ mongoose.Promise = Promise
 const Veggie = mongoose.model('Veggie', {
   name: String,
   month: [Number], // not sure if this is the correct way to display the months?
-  carbonprint: Number,
+  carbonprint: Number
 })
 
 if (process.env.RESET_DATABASE) {
@@ -23,24 +23,23 @@ if (process.env.RESET_DATABASE) {
     await Veggie.deleteMany()
 
 
-
-    await new Veggie({ name: "Broccoli", month: (6, 7, 8), carbonprint: 0.56 }).save()
-    await new Veggie({ name: "Cauliflower", month: (5, 6, 7, 8), carbonprint: 0.43 }).save()
-    await new Veggie({ name: "Pepper", month: (7, 8), carbonprint: 0.64 }).save()
-    await new Veggie({ name: "Cabbage", month: (7, 8), carbonprint: 0.40 }).save()
-    await new Veggie({ name: "Mushrooms", month: (7, 8), carbonprint: 1.31 }).save()
-    await new Veggie({ name: "Aubergine", month: (8), carbonprint: 0.29 }).save()
-    await new Veggie({ name: "Fennel", month: (7, 8), carbonprint: 0.24 }).save()
-    await new Veggie({ name: "Potato", month: (5, 6, 7, 8), carbonprint: 0.40 }).save()
-    await new Veggie({ name: "Cucumber", month: (7, 8), carbonprint: 0.45 }).save()
-    await new Veggie({ name: "Carrot", month: (5, 6, 7, 8), carbonprint: 0.27 }).save()
-    await new Veggie({ name: "Pumpkin", month: (8), carbonprint: 0.21 }).save()
-    await new Veggie({ name: "Beetroot", month: (5, 6, 7, 8), carbonprint: 0.32 }).save()
-    await new Veggie({ name: "Asparagus", month: (5, 6), carbonprint: 0.58 }).save()
-    await new Veggie({ name: "Spinach", month: (5, 6, 7, 8), carbonprint: 0.29 }).save()
-    await new Veggie({ name: "Zucchini", month: (5, 6, 7, 8), carbonprint: 0.25 }).save()
-    await new Veggie({ name: "Tomato", month: (6, 7, 8), carbonprint: 0.77 }).save()
-    await new Veggie({ name: "Yellow Onion", month: (5, 6, 7, 8), carbonprint: 0.25 }).save()
+    await new Veggie({ name: "Broccoli", month: [6, 7, 8], carbonprint: 0.56 }).save()
+    await new Veggie({ name: "Cauliflower", month: [5, 6, 7, 8], carbonprint: 0.43 }).save()
+    await new Veggie({ name: "Pepper", month: [7, 8], carbonprint: 0.64 }).save()
+    await new Veggie({ name: "Cabbage", month: [7, 8], carbonprint: 0.40 }).save()
+    await new Veggie({ name: "Mushrooms", month: [7, 8], carbonprint: 1.31 }).save()
+    await new Veggie({ name: "Aubergine", month: [8], carbonprint: 0.29 }).save()
+    await new Veggie({ name: "Fennel", month: [7, 8], carbonprint: 0.24 }).save()
+    await new Veggie({ name: "Potato", month: [5, 6, 7, 8], carbonprint: 0.40 }).save()
+    await new Veggie({ name: "Cucumber", month: [7, 8], carbonprint: 0.45 }).save()
+    await new Veggie({ name: "Carrot", month: [5, 6, 7, 8], carbonprint: 0.27 }).save()
+    await new Veggie({ name: "Pumpkin", month: [8], carbonprint: 0.21 }).save()
+    await new Veggie({ name: "Beetroot", month: [5, 6, 7, 8], carbonprint: 0.32 }).save()
+    await new Veggie({ name: "Asparagus", month: [5, 6], carbonprint: 0.58 }).save()
+    await new Veggie({ name: "Spinach", month: [5, 6, 7, 8], carbonprint: 0.29 }).save()
+    await new Veggie({ name: "Zucchini", month: [5, 6, 7, 8], carbonprint: 0.25 }).save()
+    await new Veggie({ name: "Tomato", month: [6, 7, 8], carbonprint: 0.77 }).save()
+    await new Veggie({ name: "Yellow Onion", month: [5, 6, 7, 8], carbonprint: 0.25 }).save()
 
   }
   seedDatabase()
@@ -61,14 +60,13 @@ app.use(bodyParser.json())
 //   res.send('Hello world')
 // })
 
-//trying out /
+//only gives an empty array
 app.get('/veggies', async (req, res) => {
-  console.log(veggies)
   const allVeggies = await Veggie.find()
   res.json(allVeggies)
 })
 
-//trying out .find() or .filter() make a query depending on the name
+//make a query search based on the name
 app.get('/vegetables', async (req, res) => {
   const vegetable = req.query.name
   const veggies = await Veggie.find(vegetable)
