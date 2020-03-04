@@ -65,14 +65,31 @@ app.get('/veggies', async (req, res) => {
   const allVeggies = await Veggie.find()
   res.json(allVeggies)
 })
-
+// not working
 //make a query search based on the name
 app.get('/vegetables', async (req, res) => {
-  const vegetable = req.query.name
-  const veggies = await Veggie.find(vegetable)
-  console.log(veggies)
-  res.json(veggies)
+  const name = req.query.name
+  // i makes the search not being case sensitive
+  const vegetables = await Veggie.find(name, 'i')
+  console.log(vegetables)
+  res.json(vegetables)
 })
+
+//not working
+// app.get('/vegetables', async (req, res) => {
+//   const queryString = req.query.name
+//   const queryRegex = new RegExp(queryString, 'i')
+//   //  i makes it search not being case sensitive
+//   const name = await Veggie.find({ 'name': queryRegex })
+//   if (name) {
+//     //if .find is succesful
+//     console.log('Found : ' + name)
+//     res.json(name);
+//   } else {
+//     console.log('Error ' + err)
+//     res.status(404).json({ message: 'Cannot find this vegetable', err: err })
+//   }
+// })
 
 //searchpoint for name+carbonprints
 app.get('/carbonprints', async (req, res) => {
