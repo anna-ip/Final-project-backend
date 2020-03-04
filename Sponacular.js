@@ -3,11 +3,7 @@
 // import cors from 'cors'
 // import mongoose from 'mongoose'
 
-//import dotenv from 'dotenv'
-//import axios from 'axios'
-
-
-//dotenv.config()
+require("dotenv").config();
 
 // const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/foodAPI"
 // mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -31,15 +27,11 @@
 //     res.send('Hello world')
 // })
 
-
 // // vegetable = 'fennel, onion'
 // //need some kind of key that will be inserted from front end in the query field depending on the frontend button
 // // const requestUrl = `https://api.spoonacular.com/recipes/complexSearch?query=${`vegetable`}&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=apiKey=${key}`
 
 //const requestUrl = `https://api.spoonacular.com/recipes/complexSearch?query=fennel, onion&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=20&apiKey=`
-
-
-
 
 ////////////This one works and gives back objects////////////////
 // const axios = require('axios')
@@ -65,26 +57,32 @@
 // }
 // allApi()
 
-
 /////// This one works and gives an array but not with fully info /////////////////
-const axios = require('axios')
 
-const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel, onion&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=20&apiKey=`;
-//const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel, onion&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=20&apiKey=${key}`;
+const api = () => {
+  const axios = require("axios");
 
-const getData = async url => {
+  // const baseUrl = `https://api.spoonacular.com/recipes/`;
+  // const number = `number=20`;
+  // const id = `onion`;
+  // const apiKey = process.env.API_KEY;
+
+  // const url = `${baseUrl}complexSearch?query=${id},&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&${number}&apiKey=${apiKey}`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel, onion&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`;
+
+  const getData = async url => {
     try {
-        const response = await axios.get(url);
-        const data = response.data;
-        console.log(data);
-        console.log(url)
+      const response = await axios.get(url);
+      const data = response.data;
+      console.log(data);
+      console.log(url);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
+  };
+  getData(url);
 };
-
-getData(url);
-
+api();
 //////////
 
 ////////// This hows us the api adress/////////////////
@@ -98,19 +96,12 @@ getData(url);
 // }
 // getDataWithin()
 
-
-//viktors kod 
+//viktors kod
 // getDataWithin(lat, long, radius) {
-//     const url = `${this.baseURL}?radius=${radius}&lat=${lat}&lng=${long}&maxFeatures=${this.maxFeatures}&outputFormat=${this.format}&apiKey=${this.apiKey}`
+//     const url = `${baseURL}?radius=${radius}&lat=${lat}&lng=${long}&maxFeatures=${this.maxFeatures}&outputFormat=${this.format}&apiKey=${this.apiKey}`
 //     console.log(url)
 //     return axios.get(url).then(response => response.data)
 //   }
-
-
-
-
-
-
 
 //Start the server
 // app.listen(port, () => {
