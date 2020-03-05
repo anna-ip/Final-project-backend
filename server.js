@@ -2,7 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-import { api } from "./Sponacular";
+
 import axios from "axios";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/food";
@@ -15,10 +15,10 @@ const Veggie = mongoose.model("Veggie", {
   carbonprint: Number
 });
 
-console.log(api);
-const Api = mongoose.model("Api", {
-  id: Number
-});
+// console.log(api);
+// const Api = mongoose.model("Api", {
+//   id: Number
+// });
 
 if (process.env.RESET_DATABASE) {
   console.log("Resetting database");
@@ -197,11 +197,25 @@ app.get("/season", async (req, res) => {
   res.json(season);
 });
 
-app.get("/recipes", async (req, res) => {
-  const recipesRequest = await Api.find(); // Api comes from the mongoose model
-  console.log(recipesRequest);
-  res.json(recipesRequest);
-});
+
+
+app.get('/recipes', (req, res) => {
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel,onion&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`
+  const getData = async () => {
+    try {
+      const response = await axios.get(url)
+      if (response) {
+        const data = response.data.results
+        res.json(data)
+      } else {
+        res.send('uh oh...nothing here')
+      }
+    } catch (error) {
+      res.send('wrong', error)
+    }
+  }
+  getData()
+})
 
 // Start the server
 app.listen(port, () => {

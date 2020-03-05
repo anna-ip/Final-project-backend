@@ -3,7 +3,7 @@
 // import cors from 'cors'
 // import mongoose from 'mongoose'
 
-require("dotenv").config();
+// require("dotenv").config();
 
 // const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/foodAPI"
 // mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -58,9 +58,25 @@ require("dotenv").config();
 // allApi()
 
 /////// This one works and gives an array but not with fully info /////////////////
-
-const api = () => {
-  const axios = require("axios");
+// app.get('/recipes', (req, res) => {
+//     const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel,onion&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`
+//     const getData = async () => {
+//         try {
+//             const response = await axios.get(url)
+//             if (response) {
+//                 const data = response.data.results
+//                 res.json(data)
+//             } else {
+//                 res.send('uh oh...nothing here')
+//             }
+//         } catch (error) {
+//             res.send('wrong', error)
+//         }
+//     }
+//     getData()
+// })
+// const api = () => {
+//   const axios = require("axios");
 
   // const baseUrl = `https://api.spoonacular.com/recipes/`;
   // const number = `number=20`;
@@ -68,21 +84,21 @@ const api = () => {
   // const apiKey = process.env.API_KEY;
 
   // const url = `${baseUrl}complexSearch?query=${id},&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&${number}&apiKey=${apiKey}`;
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel, onion&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`;
+//   const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel, onion&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`;
 
-  const getData = async url => {
-    try {
-      const response = await axios.get(url);
-      const data = response.data;
-      console.log(data);
-      console.log(url);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  getData(url);
-};
-api();
+//   const getData = async url => {
+//     try {
+//       const response = await axios.get(url);
+//       const data = response.data;
+//       console.log(data);
+//       console.log(url);
+//     } catch (error) {
+//       console.log(error);
+//     }
+//   };
+//   getData(url);
+// };
+// api();
 //////////
 
 ////////// This hows us the api adress/////////////////
