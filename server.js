@@ -15,10 +15,16 @@ const Veggie = mongoose.model("Veggie", {
   carbonprint: Number
 });
 
-// console.log(api);
-// const Api = mongoose.model("Api", {
-//   id: Number
-// });
+
+const CarbonFootPrint = mongoose.model('CarbonFootPrint', {
+  carbonprint: Number,
+  //this name will be related to the above Name through the ObjectId
+  name: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Name'
+  }
+})
+
 
 if (process.env.RESET_DATABASE) {
   console.log("Resetting database");
@@ -26,6 +32,8 @@ if (process.env.RESET_DATABASE) {
   const seedDatabase = async () => {
     // this wait makes it that everytime seedDatabase is run it starts with empty the array.
     await Veggie.deleteMany();
+    await CarbonFootPrint.deleteMany();
+
 
     // carbon footprint based on 1kg
 
@@ -34,29 +42,29 @@ if (process.env.RESET_DATABASE) {
       name: "Broccoli",
       month: [6, 7, 8],
       carbonprint: 0.56
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Cauliflower",
       name: "Cauliflower",
       month: [5, 6, 7, 8],
       carbonprint: 0.43
-    }).save();
+    }).save();//
     await new Veggie({
       id: "pepper",
       name: "Pepper",
       month: [7, 8],
       carbonprint: 0.64
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Cabbage",
       name: "Cabbage",
       month: [7, 8],
       carbonprint: 0.4
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Mushrooms",
       name: "Mushrooms",
-      month: [7, 8],
+      month: [7, 8],//
       carbonprint: 1.31
     }).save();
     await new Veggie({
@@ -64,73 +72,55 @@ if (process.env.RESET_DATABASE) {
       name: "Eggplant",
       month: [8],
       carbonprint: 0.29
-    }).save();
-    await new Veggie({
-      id: "Fennel",
-      name: "Fennel",
-      month: [7, 8],
-      carbonprint: 0.24
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Potato",
       name: "Potato",
       month: [5, 6, 7, 8],
       carbonprint: 0.4
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Cucumber",
       name: "Cucumber",
       month: [7, 8],
       carbonprint: 0.45
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Carrot",
       name: "Carrot",
       month: [5, 6, 7, 8],
       carbonprint: 0.27
-    }).save();
+    }).save(); //
     await new Veggie({
       id: "Pumpkin",
       name: "Pumpkin",
       month: [8],
       carbonprint: 0.21
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Beets",
       name: "Beets",
       month: [5, 6, 7, 8],
       carbonprint: 0.32
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Asparagus",
       name: "Asparagus",
       month: [5, 6],
       carbonprint: 0.58
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Spinach",
       name: "Spinach",
       month: [5, 6, 7, 8],
       carbonprint: 0.29
-    }).save();
-    await new Veggie({
-      id: "Zucchini",
-      name: "Zucchini",
-      month: [5, 6, 7, 8],
-      carbonprint: 0.25
-    }).save();
+    }).save();//
     await new Veggie({
       id: "Tomato",
       name: "Tomato",
       month: [6, 7, 8],
       carbonprint: 0.77
-    }).save();
-    await new Veggie({
-      id: "Onion",
-      name: "Onion",
-      month: [5, 6, 7, 8],
-      carbonprint: 0.25
-    }).save();
+    }).save();//
   };
   seedDatabase();
 }
@@ -183,10 +173,15 @@ app.get("/vegetables", async (req, res) => {
 
 //searchpoint for name+carbonprints
 app.get("/carbonprints", async (req, res) => {
-  const carbonPrint = await Veggie.find("carbonprint");
+  const carbonPrint = await Veggie.filter("carbonprint");
   console.log(carbonPrint);
   res.json(carbonPrint);
 });
+
+app.get('/footprints', async (req, res) => {
+  const footPrint = await CarbonFootPrint.find().populate('name')
+  res.json(footPrint)
+})
 
 //var today = new Date();
 //const mm = today.getMonth() + 1; //January is 0!
@@ -200,12 +195,13 @@ app.get("/season", async (req, res) => {
 
 
 app.get('/recipes', (req, res) => {
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=fennel,onion&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=beets, carrots&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=20&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
   const getData = async () => {
     try {
       const response = await axios.get(url)
       if (response) {
         const data = response.data.results
+        console.log(data)
         res.json(data)
       } else {
         res.send('uh oh...nothing here')
