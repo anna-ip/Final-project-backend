@@ -10,20 +10,21 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
 const Veggie = mongoose.model("Veggie", {
+  id: Number,
   name: String,
   month: [Number], // not sure if this is the correct way to display the months?
   carbonprint: Number
 });
 
 
-const CarbonFootPrint = mongoose.model('CarbonFootPrint', {
-  carbonprint: Number,
-  //this name will be related to the above Name through the ObjectId
-  name: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: 'Name'
-  }
-})
+// const CarbonFootPrint = mongoose.model('CarbonFootPrint', {
+//   carbonprint: Number,
+//   //this name will be related to the above Name through the ObjectId
+//   name: {
+//     type: mongoose.Schema.Types.ObjectId,
+//     ref: 'Name'
+//   }
+// })
 
 
 if (process.env.RESET_DATABASE) {
@@ -32,7 +33,7 @@ if (process.env.RESET_DATABASE) {
   const seedDatabase = async () => {
     // this wait makes it that everytime seedDatabase is run it starts with empty the array.
     await Veggie.deleteMany();
-    await CarbonFootPrint.deleteMany();
+    // await CarbonFootPrint.deleteMany();
 
 
     // carbon footprint based on 1kg
@@ -50,7 +51,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.43
     }).save();//
     await new Veggie({
-      id: "pepper",
+      id: "Pepper",
       name: "Pepper",
       month: [7, 8],
       carbonprint: 0.64
@@ -86,7 +87,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.45
     }).save();//
     await new Veggie({
-      id: "Carrot",
+      id: 11124,
       name: "Carrot",
       month: [5, 6, 7, 8],
       carbonprint: 0.27
@@ -98,7 +99,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.21
     }).save();//
     await new Veggie({
-      id: "Beets",
+      id: 11080,
       name: "Beets",
       month: [5, 6, 7, 8],
       carbonprint: 0.32
@@ -116,7 +117,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.29
     }).save();//
     await new Veggie({
-      id: "Tomato",
+      id: 11529,
       name: "Tomato",
       month: [6, 7, 8],
       carbonprint: 0.77
@@ -137,7 +138,7 @@ app.use(bodyParser.json());
 
 // Start defining your routes here
 app.get("/", (req, res) => {
-  res.send("Hello world");
+  res.send("Hello Hello");
 });
 
 //only gives an empty array
@@ -145,15 +146,16 @@ app.get("/veggies", async (req, res) => {
   const allVeggies = await Veggie.find();
   res.json(allVeggies);
 });
+
 // not working
 //make a query search based on the name
-app.get("/vegetables", async (req, res) => {
-  const name = req.query.name;
-  // i makes the search not being case sensitive
-  const vegetables = await Veggie.find(name, "i");
-  console.log(vegetables);
-  res.json(vegetables);
-});
+// app.get("/vegetables", async (req, res) => {
+//   const name = req.query.name;
+//   // i makes the search not being case sensitive
+//   const vegetables = await Veggie.find(name, "i");
+//   console.log(vegetables);
+//   res.json(vegetables);
+// });
 
 //not working
 // app.get('/vegetables', async (req, res) => {
@@ -172,30 +174,42 @@ app.get("/vegetables", async (req, res) => {
 // })
 
 //searchpoint for name+carbonprints
-app.get("/carbonprints", async (req, res) => {
-  const carbonPrint = await Veggie.filter("carbonprint");
-  console.log(carbonPrint);
-  res.json(carbonPrint);
-});
+// app.get("/carbonprints", async (req, res) => {
+//   const carbonPrint = await Veggie.filter("carbonprint");
+//   console.log(carbonPrint);
+//   res.json(carbonPrint);
+// });
 
-app.get('/footprints', async (req, res) => {
-  const footPrint = await CarbonFootPrint.find().populate('name')
-  res.json(footPrint)
-})
+// app.get('/footprints', async (req, res) => {
+//   const footPrint = await CarbonFootPrint.find().populate('name')
+//   res.json(footPrint)
+// })
 
 //var today = new Date();
 //const mm = today.getMonth() + 1; //January is 0!
 //query depending on name+carbonprint
-app.get("/season", async (req, res) => {
-  const season = await Veggie.find();
-  console.log(season);
-  res.json(season);
-});
+// app.get("/season", async (req, res) => {
+//   const season = await Veggie.find();
+//   console.log(season);
+//   res.json(season);
+// });
 
+app.get('/:name', (req, res) => {
+  Veggie.findOne({ name: req.params.name }).then(veggie => {
+    if (veggie) {
+      res.json(veggie)
+    } else {
+      res.status(404).json({ error: 'Not Found' })
+    }
+  })
+})
 
-
+//skicka med...id or name
+//req.params from veggies db
 app.get('/recipes', (req, res) => {
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=beets, carrots&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=20&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
+  // const query = name
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=beet&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
+  // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${req.body.query}&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
   const getData = async () => {
     try {
       const response = await axios.get(url)
