@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import mongoose from "mongoose";
-
 import axios from "axios";
 
 const mongoUrl = process.env.MONGO_URL || "mongodb://localhost/food";
@@ -16,7 +15,6 @@ const Veggie = mongoose.model("Veggie", {
   carbonprint: Number
 });
 
-
 // const CarbonFootPrint = mongoose.model('CarbonFootPrint', {
 //   carbonprint: Number,
 //   //this name will be related to the above Name through the ObjectId
@@ -26,7 +24,6 @@ const Veggie = mongoose.model("Veggie", {
 //   }
 // })
 
-
 if (process.env.RESET_DATABASE) {
   console.log("Resetting database");
 
@@ -35,7 +32,6 @@ if (process.env.RESET_DATABASE) {
     await Veggie.deleteMany();
     // await CarbonFootPrint.deleteMany();
 
-
     // carbon footprint based on 1kg
 
     await new Veggie({
@@ -43,29 +39,29 @@ if (process.env.RESET_DATABASE) {
       name: "Broccoli",
       month: [6, 7, 8],
       carbonprint: 0.56
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Cauliflower",
       name: "Cauliflower",
       month: [5, 6, 7, 8],
       carbonprint: 0.43
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Pepper",
       name: "Pepper",
       month: [7, 8],
       carbonprint: 0.64
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Cabbage",
       name: "Cabbage",
       month: [7, 8],
       carbonprint: 0.4
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Mushrooms",
       name: "Mushrooms",
-      month: [7, 8],//
+      month: [7, 8], //
       carbonprint: 1.31
     }).save();
     await new Veggie({
@@ -73,19 +69,19 @@ if (process.env.RESET_DATABASE) {
       name: "Eggplant",
       month: [8],
       carbonprint: 0.29
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Potato",
       name: "Potato",
       month: [5, 6, 7, 8],
       carbonprint: 0.4
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Cucumber",
       name: "Cucumber",
       month: [7, 8],
       carbonprint: 0.45
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: 11124,
       name: "Carrot",
@@ -97,31 +93,31 @@ if (process.env.RESET_DATABASE) {
       name: "Pumpkin",
       month: [8],
       carbonprint: 0.21
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: 11080,
       name: "Beets",
       month: [5, 6, 7, 8],
       carbonprint: 0.32
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Asparagus",
       name: "Asparagus",
       month: [5, 6],
       carbonprint: 0.58
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: "Spinach",
       name: "Spinach",
       month: [5, 6, 7, 8],
       carbonprint: 0.29
-    }).save();//
+    }).save(); //
     await new Veggie({
       id: 11529,
       name: "Tomato",
       month: [6, 7, 8],
       carbonprint: 0.77
-    }).save();//
+    }).save(); //
   };
   seedDatabase();
 }
@@ -194,38 +190,56 @@ app.get("/veggies", async (req, res) => {
 //   res.json(season);
 // });
 
-app.get('/:name', (req, res) => {
+app.get("/:name", (req, res) => {
   Veggie.findOne({ name: req.params.name }).then(veggie => {
     if (veggie) {
-      res.json(veggie)
+      res.json(veggie);
     } else {
-      res.status(404).json({ error: 'Not Found' })
+      res.status(404).json({ error: "Not Found" });
     }
-  })
-})
+  });
+});
 
 //skicka med...id or name
 //req.params from veggies db
-app.get('/recipes', (req, res) => {
-  // const query = name
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=beet&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
-  // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${req.body.query}&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
-  const getData = async () => {
-    try {
-      const response = await axios.get(url)
-      if (response) {
-        const data = response.data.results
-        console.log(data)
-        res.json(data)
-      } else {
-        res.send('uh oh...nothing here')
-      }
-    } catch (error) {
-      res.send('wrong', error)
+
+// app.get("/recipes", (req, res) => {
+//   // const query = name
+//   const url = `https://api.spoonacular.com/recipes/complexSearch?query=beet&diet=vegetarian,vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`;
+//   // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${req.body.query}&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
+//   const getData = async () => {
+//     try {
+//       const response = await axios.get(url);
+//       if (response) {
+//         const data = response.data.results;
+//         console.log(data);
+//         res.json(data);
+//       } else {
+//         res.send("uh oh...nothing here");
+//       }
+//     } catch (error) {
+//       res.send("wrong", error);
+//     }
+//   };
+//   getData();
+// });
+
+app.get("/recipes/:query", async (req, res) => {
+  const { query } = req.params;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`;
+  try {
+    const response = await axios.get(url);
+    if (response) {
+      const data = response.data.results;
+      console.log(data);
+      res.json(data);
+    } else {
+      res.send("uh oh...nothing here");
     }
+  } catch (error) {
+    res.send("wrong", error);
   }
-  getData()
-})
+});
 
 // Start the server
 app.listen(port, () => {
