@@ -143,53 +143,6 @@ app.get("/veggies", async (req, res) => {
   res.json(allVeggies);
 });
 
-// not working
-//make a query search based on the name
-// app.get("/vegetables", async (req, res) => {
-//   const name = req.query.name;
-//   // i makes the search not being case sensitive
-//   const vegetables = await Veggie.find(name, "i");
-//   console.log(vegetables);
-//   res.json(vegetables);
-// });
-
-//not working
-// app.get('/vegetables', async (req, res) => {
-//   const queryString = req.query.name
-//   const queryRegex = new RegExp(queryString, 'i')
-//   //  i makes it search not being case sensitive
-//   const name = await Veggie.find({ 'name': queryRegex })
-//   if (name) {
-//     //if .find is succesful
-//     console.log('Found : ' + name)
-//     res.json(name);
-//   } else {
-//     console.log('Error ' + err)
-//     res.status(404).json({ message: 'Cannot find this vegetable', err: err })
-//   }
-// })
-
-//searchpoint for name+carbonprints
-// app.get("/carbonprints", async (req, res) => {
-//   const carbonPrint = await Veggie.filter("carbonprint");
-//   console.log(carbonPrint);
-//   res.json(carbonPrint);
-// });
-
-// app.get('/footprints', async (req, res) => {
-//   const footPrint = await CarbonFootPrint.find().populate('name')
-//   res.json(footPrint)
-// })
-
-//var today = new Date();
-//const mm = today.getMonth() + 1; //January is 0!
-//query depending on name+carbonprint
-// app.get("/season", async (req, res) => {
-//   const season = await Veggie.find();
-//   console.log(season);
-//   res.json(season);
-// });
-
 app.get("/:name", (req, res) => {
   Veggie.findOne({ name: req.params.name }).then(veggie => {
     if (veggie) {
@@ -200,33 +153,9 @@ app.get("/:name", (req, res) => {
   });
 });
 
-//skicka med...id or name
-//req.params from veggies db
-
-// app.get("/recipes", (req, res) => {
-//   // const query = name
-//   const url = `https://api.spoonacular.com/recipes/complexSearch?query=beet&diet=vegetarian,vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`;
-//   // const url = `https://api.spoonacular.com/recipes/complexSearch?query=${req.body.query}&diet=vegetarian, vegan&excludeIngredients=meat, chicken, fish&type=main course&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`
-//   const getData = async () => {
-//     try {
-//       const response = await axios.get(url);
-//       if (response) {
-//         const data = response.data.results;
-//         console.log(data);
-//         res.json(data);
-//       } else {
-//         res.send("uh oh...nothing here");
-//       }
-//     } catch (error) {
-//       res.send("wrong", error);
-//     }
-//   };
-//   getData();
-// });
-
 app.get("/recipes/:query", async (req, res) => {
   const { query } = req.params;
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=f1d974d080554ba9b3d5684d8f181411`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`;
   try {
     const response = await axios.get(url);
     if (response) {
