@@ -37,85 +37,85 @@ if (process.env.RESET_DATABASE) {
     await new Veggie({
       id: "Broccoli",
       name: "Broccoli",
-      month: [6, 7, 8],
+      month: ["Jun", "Jul", "Aug"],
       carbonprint: 0.56
     }).save(); //
     await new Veggie({
       id: "Cauliflower",
       name: "Cauliflower",
-      month: [5, 6, 7, 8],
+      month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.43
     }).save(); //
     await new Veggie({
       id: "Pepper",
       name: "Pepper",
-      month: [7, 8],
+      month: ["Jul", "Aug"],
       carbonprint: 0.64
     }).save(); //
     await new Veggie({
       id: "Cabbage",
       name: "Cabbage",
-      month: [7, 8],
+      month: ["Jul", "Aug"],
       carbonprint: 0.4
     }).save(); //
     await new Veggie({
       id: "Mushrooms",
       name: "Mushrooms",
-      month: [7, 8], //
+      month: ["Jul", "Aug"], //
       carbonprint: 1.31
     }).save();
     await new Veggie({
       id: "Eggplant",
       name: "Eggplant",
-      month: [8],
+      month: ["Aug"],
       carbonprint: 0.29
     }).save(); //
     await new Veggie({
       id: "Potato",
       name: "Potato",
-      month: [5, 6, 7, 8],
+      month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.4
     }).save(); //
     await new Veggie({
       id: "Cucumber",
       name: "Cucumber",
-      month: [7, 8],
+      month: ["Jul", "Aug"],
       carbonprint: 0.45
     }).save(); //
     await new Veggie({
       id: 11124,
       name: "Carrot",
-      month: [5, 6, 7, 8],
+      month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.27
     }).save(); //
     await new Veggie({
       id: "Pumpkin",
       name: "Pumpkin",
-      month: [8],
+      month: ["Aug"],
       carbonprint: 0.21
     }).save(); //
     await new Veggie({
       id: 11080,
       name: "Beets",
-      month: [5, 6, 7, 8],
+      month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.32
     }).save(); //
     await new Veggie({
       id: "Asparagus",
       name: "Asparagus",
-      month: [5, 6],
+      month: ["may", "jun"],
       carbonprint: 0.58
     }).save(); //
     await new Veggie({
       id: "Spinach",
       name: "Spinach",
-      month: [5, 6, 7, 8],
+      month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.29
     }).save(); //
     await new Veggie({
       id: 11529,
       name: "Tomato",
-      month: [6, 7, 8],
+      month: ["Jun", "Jul", "Aug"],
       carbonprint: 0.77
     }).save(); //
   };
