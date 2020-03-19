@@ -11,7 +11,7 @@ mongoose.Promise = Promise;
 const Veggie = mongoose.model("Veggie", {
   id: Number,
   name: String,
-  month: [Number], // not sure if this is the correct way to display the months?
+  month: [String], // not sure if this is the correct way to display the months?
   carbonprint: Number
 });
 
@@ -226,7 +226,7 @@ app.get("/:name", (req, res) => {
 
 app.get("/recipes/:query", async (req, res) => {
   const { query } = req.params;
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=05cadf6ac7ab4f7689fadae6f24214f3`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=f1d974d080554ba9b3d5684d8f181411`;
   try {
     const response = await axios.get(url);
     if (response) {
