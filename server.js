@@ -155,7 +155,7 @@ app.get("/:name", (req, res) => {
 
 app.get("/recipes/:query", async (req, res) => {
   const { query } = req.params;
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=e99f7d4ea0af48abb5d111748867fa6b`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=75e90b67835f427186dbdb372245bc4c`;
   try {
     const response = await axios.get(url);
     if (response) {
