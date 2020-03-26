@@ -11,24 +11,14 @@ mongoose.Promise = Promise;
 const Veggie = mongoose.model("Veggie", {
   id: Number,
   name: String,
-  month: [String], // not sure if this is the correct way to display the months?
+  month: [String],
   carbonprint: Number
 });
-
-// const CarbonFootPrint = mongoose.model('CarbonFootPrint', {
-//   carbonprint: Number,
-//   //this name will be related to the above Name through the ObjectId
-//   name: {
-//     type: mongoose.Schema.Types.ObjectId,
-//     ref: 'Name'
-//   }
-// })
 
 if (process.env.RESET_DATABASE) {
   console.log("Resetting database");
 
   const seedDatabase = async () => {
-    // this wait makes it that everytime seedDatabase is run it starts with empty the array.
     await Veggie.deleteMany();
     // await CarbonFootPrint.deleteMany();
 
@@ -155,7 +145,7 @@ app.get("/:name", (req, res) => {
 
 app.get("/recipes/:query", async (req, res) => {
   const { query } = req.params;
-  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=5&apiKey=75e90b67835f427186dbdb372245bc4c`;
+  const url = `https://api.spoonacular.com/recipes/complexSearch?query=${query}&diet=vegetarian,vegan&excludeIngredients=meat,chicken,fish&type=maincourse&instructionsRequired=true&fillIngredients=true&addRecipeInformation=true&sortDirection=asc&number=10&apiKey=c346b657136447bda1241bc8c36ee4bc`;
   try {
     const response = await axios.get(url);
     if (response) {
@@ -166,7 +156,7 @@ app.get("/recipes/:query", async (req, res) => {
       res.send("uh oh...nothing here");
     }
   } catch (error) {
-    res.send("wrong", error);
+    res.status("wrong", error);
   }
 });
 
