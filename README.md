@@ -1,7 +1,6 @@
-# Express Starter Project
+# Backend for the final project Sustain
 
-This project includes the packages and babel setup for an express server, and is just meant to make things a little simpler to get up and running with.
+This is a RESTful API for a React Native project called Sustain. It includes an Mongoose model for a GET including information about vegetables and an third party API.
 
-## Getting started
-
-Install dependencies with `npm install`, then start the server by running `npm run dev`
+# Deployed version
+https://git.heroku.com/final-backend-project-1.git
