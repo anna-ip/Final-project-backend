@@ -9,7 +9,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.Promise = Promise;
 
 const Veggie = mongoose.model("Veggie", {
-  id: Number,
+  id: String,
   name: String,
   month: [String],
   carbonprint: Number
