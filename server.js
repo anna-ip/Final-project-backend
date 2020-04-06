@@ -73,7 +73,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.45
     }).save(); //
     await new Veggie({
-      id: 11124,
+      id: "Carrot",
       name: "Carrot",
       month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.27
@@ -85,7 +85,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.21
     }).save(); //
     await new Veggie({
-      id: 11080,
+      id: "Beets",
       name: "Beets",
       month: ["May", "Jun", "Jul", "Aug"],
       carbonprint: 0.32
@@ -103,7 +103,7 @@ if (process.env.RESET_DATABASE) {
       carbonprint: 0.29
     }).save(); //
     await new Veggie({
-      id: 11529,
+      id: "Tomato",
       name: "Tomato",
       month: ["Jun", "Jul", "Aug"],
       carbonprint: 0.77
